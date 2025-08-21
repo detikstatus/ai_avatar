@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,31 +48,13 @@
             align-items: center;
         }
         
-        #main-video {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        
-        /* Placeholder sebelum video dimuat */
-        .video-placeholder {
-            text-align: center;
-            padding: 20px;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
-        }
-        
         /* Footer informasi */
         .exhibition-footer {
             padding: 15px;
             background-color: #1e1e1e;
             text-align: center;
             border-top: 1px solid #333;
+            z-index: 10;
         }
         
         .exhibition-title {
@@ -86,16 +67,6 @@
         .exhibition-description {
             font-size: 0.9rem;
             opacity: 0.8;
-        }
-        
-        /* Loading indicator */
-        .loading {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #cccccc;
-            font-size: 1rem;
         }
         
         /* Responsiveness */
@@ -113,13 +84,13 @@
 <body>
     <div class="exhibition-container">
         <div class="video-stage">
-            <!-- Video container akan diisi oleh HeyGen script -->
             <div class="video-container">
-                <div class="video-placeholder">
+                <!-- Tempat untuk video dari HeyGen -->
+                <!-- Anda akan menambahkan tag video atau iframe dari HeyGen di sini -->
+                <div id="heygen-video-placeholder">
                     <img src="https://placehold.co/800x450/1e1e1e/cccccc?text=Video+Pameran" alt="Video pameran akan ditampilkan di sini" />
                 </div>
             </div>
-            <div class="loading">Memuat konten pameran...</div>
         </div>
         
         <div class="exhibition-footer">
@@ -127,45 +98,5 @@
             <div class="exhibition-description">Temukan pengalaman visual yang menakjubkan</div>
         </div>
     </div>
-    
-    <script>
-        // Fungsi untuk inisialisasi video
-        function initVideo() {
-            // Tempat untuk menambahkan script HeyGen
-            console.log("Siap untuk menambahkan integrasi HeyGen");
-            
-            // Example: nanti Anda bisa menambahkan script HeyGen di sini
-            // document.getElementById('main-video').src = "URL_VIDEO_DARI_HEYGEN";
-            <script>!function(window){const host="https://labs.heygen.com",url=host+"/guest/streaming-embed?share=eyJxdWFsaXR5IjoiaGlnaCIsImF2YXRhck5hbWUiOiJNYXJpYW5uZV9Qcm9mZXNzaW9uYWxMb29r%0D%0AX3B1YmxpYyIsInByZXZpZXdJbWciOiJodHRwczovL2ZpbGVzMi5oZXlnZW4uYWkvYXZhdGFyL3Yz%0D%0AL2UzMmQ3ZDEwNDdhMjRjMzRhNzBjNTRjMmI3NzQ0MWMwXzU1ODkwL3ByZXZpZXdfdGFyZ2V0Lndl%0D%0AYnAiLCJuZWVkUmVtb3ZlQmFja2dyb3VuZCI6dHJ1ZSwia25vd2xlZGdlQmFzZUlkIjoiZGVtby0x%0D%0AIiwidXNlcm5hbWUiOiJlNGU3MDJiMDgzMTQ0YWJkYjUyZWMzNTFiNWJkYjY0ZiJ9&inIFrame=1",clientWidth=document.body.clientWidth,wrapDiv=document.createElement("div");wrapDiv.id="heygen-streaming-embed";const container=document.createElement("div");container.id="heygen-streaming-container";const stylesheet=document.createElement("style");stylesheet.innerHTML=`\n  #heygen-streaming-embed {\n    z-index: 9999;\n    position: fixed;\n    left: 40px;\n    bottom: 40px;\n    width: 200px;\n    height: 200px;\n    border-radius: 50%;\n    border: 2px solid #fff;\n    box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.12);\n    transition: all linear 0.1s;\n    overflow: hidden;\n\n    opacity: 0;\n    visibility: hidden;\n  }\n  #heygen-streaming-embed.show {\n    opacity: 1;\n    visibility: visible;\n  }\n  #heygen-streaming-embed.expand {\n    ${clientWidth<540?"height: 266px; width: 96%; left: 50%; transform: translateX(-50%);":"height: 366px; width: calc(366px * 16 / 9);"}\n    border: 0;\n    border-radius: 8px;\n  }\n  #heygen-streaming-container {\n    width: 100%;\n    height: 100%;\n  }\n  #heygen-streaming-container iframe {\n    width: 100%;\n    height: 100%;\n    border: 0;\n  }\n  `;const iframe=document.createElement("iframe");iframe.allowFullscreen=!1,iframe.title="Streaming Embed",iframe.role="dialog",iframe.allow="microphone",iframe.src=url;let visible=!1,initial=!1;window.addEventListener("message",(e=>{e.origin===host&&e.data&&e.data.type&&"streaming-embed"===e.data.type&&("init"===e.data.action?(initial=!0,wrapDiv.classList.toggle("show",initial)):"show"===e.data.action?(visible=!0,wrapDiv.classList.toggle("expand",visible)):"hide"===e.data.action&&(visible=!1,wrapDiv.classList.toggle("expand",visible)))})),container.appendChild(iframe),wrapDiv.appendChild(stylesheet),wrapDiv.appendChild(container),document.body.appendChild(wrapDiv)}(globalThis);</script>
-            // Sembunyikan loading indicator setelah video siap
-            setTimeout(() => {
-                document.querySelector('.loading').style.display = 'none';
-            }, 2000);
-        }
-        
-        // Jalankan ketika halaman selesai dimuat
-        window.addEventListener('DOMContentLoaded', initVideo);
-        
-        // Fitur fullscreen untuk mobile
-        function requestFullScreen() {
-            const elem = document.documentElement;
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if (elem.webkitRequestFullscreen) { /* Safari */
-                elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) { /* IE11 */
-                elem.msRequestFullscreen();
-            }
-        }
-        
-        // Klik pada video stage akan memicu fullscreen
-        document.querySelector('.video-stage').addEventListener('click', requestFullScreen);
-        
-        // Handle orientation changes
-        window.addEventListener('orientationchange', function() {
-            // Refresh untuk menyesuaikan layout
-            window.location.reload();
-        });
-    </script>
 </body>
 </html>
