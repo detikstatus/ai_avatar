@@ -52,7 +52,7 @@
   </style>
 </head>
 <body>
-  <div id="hint">Double‑click untuk fullscreen • Tekan <kbd>F</kbd> untuk toggle • <kbd>Esc</kbd> keluar</div>
+  <div id="hint">Double-click untuk fullscreen • Tekan <kbd>F</kbd> untuk toggle • <kbd>Esc</kbd> keluar</div>
 
   <script>
     !function(window){
@@ -75,8 +75,9 @@ NDM2MDRjYzZhNDU1MDk2OTUwZDcwZjRhZGExMGYifQ%3D%3D&inIFrame=1";
         #heygen-streaming-embed {
           z-index: 9999;
           position: fixed;
-          left: 40px;
-          bottom: 40px;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
           width: 200px;
           height: 200px;
           border-radius: 50%;
@@ -93,8 +94,8 @@ NDM2MDRjYzZhNDU1MDk2OTUwZDcwZjRhZGExMGYifQ%3D%3D&inIFrame=1";
         }
         #heygen-streaming-embed.expand {
           ${clientWidth < 540
-            ? "height: 266px; width: 96%; left: 50%; transform: translateX(-50%);"
-            : "height: 366px; width: calc(366px * 16 / 9);"}
+            ? "height: 266px; width: 96%; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+            : "height: 366px; width: calc(366px * 16 / 9); top: 50%; left: 50%; transform: translate(-50%, -50%);"}
           border: 0;
           border-radius: 8px;
         }
