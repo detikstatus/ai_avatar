@@ -1,1 +1,171 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pameran Digital Interaktif</title>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        /* Container utama */
+        .exhibition-container {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Video center stage */
+        .video-stage {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .video-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #main-video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Placeholder sebelum video dimuat */
+        .video-placeholder {
+            text-align: center;
+            padding: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        /* Footer informasi */
+        .exhibition-footer {
+            padding: 15px;
+            background-color: #1e1e1e;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .exhibition-title {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        .exhibition-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Loading indicator */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #cccccc;
+            font-size: 1rem;
+        }
+        
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .exhibition-title {
+                font-size: 1rem;
+            }
+            
+            .exhibition-description {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="exhibition-container">
+        <div class="video-stage">
+            <!-- Video container akan diisi oleh HeyGen script -->
+            <div class="video-container">
+                <div class="video-placeholder">
+                    <img src="https://placehold.co/800x450/1e1e1e/cccccc?text=Video+Pameran" alt="Video pameran akan ditampilkan di sini" />
+                </div>
+            </div>
+            <div class="loading">Memuat konten pameran...</div>
+        </div>
+        
+        <div class="exhibition-footer">
+            <div class="exhibition-title">Pameran Digital Interaktif 2024</div>
+            <div class="exhibition-description">Temukan pengalaman visual yang menakjubkan</div>
+        </div>
+    </div>
+    
+    <script>
+        // Fungsi untuk inisialisasi video
+        function initVideo() {
+            // Tempat untuk menambahkan script HeyGen
+            console.log("Siap untuk menambahkan integrasi HeyGen");
+            
+            // Example: nanti Anda bisa menambahkan script HeyGen di sini
+            // document.getElementById('main-video').src = "URL_VIDEO_DARI_HEYGEN";
+            
+            // Sembunyikan loading indicator setelah video siap
+            setTimeout(() => {
+                document.querySelector('.loading').style.display = 'none';
+            }, 2000);
+        }
+        
+        // Jalankan ketika halaman selesai dimuat
+        window.addEventListener('DOMContentLoaded', initVideo);
+        
+        // Fitur fullscreen untuk mobile
+        function requestFullScreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+        }
+        
+        // Klik pada video stage akan memicu fullscreen
+        document.querySelector('.video-stage').addEventListener('click', requestFullScreen);
+        
+        // Handle orientation changes
+        window.addEventListener('orientationchange', function() {
+            // Refresh untuk menyesuaikan layout
+            window.location.reload();
+        });
+    </script>
+</body>
+</html>
