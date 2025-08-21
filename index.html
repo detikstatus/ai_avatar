@@ -1,1 +1,174 @@
-<script>!function(window){const host="https://labs.heygen.com",url=host+"/guest/streaming-embed?share=eyJxdWFsaXR5IjoiaGlnaCIsImF2YXRhck5hbWUiOiJNYXJpYW5uZV9Qcm9mZXNzaW9uYWxMb29r%0D%0AX3B1YmxpYyIsInByZXZpZXdJbWciOiJodHRwczovL2ZpbGVzMi5oZXlnZW4uYWkvYXZhdGFyL3Yz%0D%0AL2UzMmQ3ZDEwNDdhMjRjMzRhNzBjNTRjMmI3NzQ0MWMwXzU1ODkwL3ByZXZpZXdfdGFyZ2V0Lndl%0D%0AYnAiLCJuZWVkUmVtb3ZlQmFja2dyb3VuZCI6dHJ1ZSwia25vd2xlZGdlQmFzZUlkIjoiZGVtby0x%0D%0AIiwidXNlcm5hbWUiOiJlNGU3MDJiMDgzMTQ0YWJkYjUyZWMzNTFiNWJkYjY0ZiJ9&inIFrame=1",clientWidth=document.body.clientWidth,wrapDiv=document.createElement("div");wrapDiv.id="heygen-streaming-embed";const container=document.createElement("div");container.id="heygen-streaming-container";const stylesheet=document.createElement("style");stylesheet.innerHTML=`\n  #heygen-streaming-embed {\n    z-index: 9999;\n    position: fixed;\n    left: 40px;\n    bottom: 40px;\n    width: 200px;\n    height: 200px;\n    border-radius: 50%;\n    border: 2px solid #fff;\n    box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.12);\n    transition: all linear 0.1s;\n    overflow: hidden;\n\n    opacity: 0;\n    visibility: hidden;\n  }\n  #heygen-streaming-embed.show {\n    opacity: 1;\n    visibility: visible;\n  }\n  #heygen-streaming-embed.expand {\n    ${clientWidth<540?"height: 266px; width: 96%; left: 50%; transform: translateX(-50%);":"height: 366px; width: calc(366px * 16 / 9);"}\n    border: 0;\n    border-radius: 8px;\n  }\n  #heygen-streaming-container {\n    width: 100%;\n    height: 100%;\n  }\n  #heygen-streaming-container iframe {\n    width: 100%;\n    height: 100%;\n    border: 0;\n  }\n  `;const iframe=document.createElement("iframe");iframe.allowFullscreen=!1,iframe.title="Streaming Embed",iframe.role="dialog",iframe.allow="microphone",iframe.src=url;let visible=!1,initial=!1;window.addEventListener("message",(e=>{e.origin===host&&e.data&&e.data.type&&"streaming-embed"===e.data.type&&("init"===e.data.action?(initial=!0,wrapDiv.classList.toggle("show",initial)):"show"===e.data.action?(visible=!0,wrapDiv.classList.toggle("expand",visible)):"hide"===e.data.action&&(visible=!1,wrapDiv.classList.toggle("expand",visible)))})),container.appendChild(iframe),wrapDiv.appendChild(stylesheet),wrapDiv.appendChild(container),document.body.appendChild(wrapDiv)}(globalThis);</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Video Center — Centered Heygen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            aspect-ratio: 16/9;
+            background: linear-gradient(145deg, #e2e8f0, #cbd5e1);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        /* The placeholder iframe is optional; Heygen injects its own iframe.
+           We keep it for structure but it's not required. */
+        #heygen-iframe {
+            display: none;
+        }
+        
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #3b82f6;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* === OVERRIDES TO CENTER HEYGEN FLOATING WIDGET ===
+           Heygen's script injects #heygen-streaming-embed with position: fixed;
+           left:40px; bottom:40px; etc. We override with !important to center it. */
+        #heygen-streaming-embed {
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            width: min(900px, 96vw) !important;
+            height: calc(min(900px, 96vw) * 9 / 16) !important;
+            border-radius: 12px !important;
+            border: 0 !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+        }
+        #heygen-streaming-embed.expand {
+            /* Keep same centered layout when expanded/collapsed */
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            width: min(900px, 96vw) !important;
+            height: calc(min(900px, 96vw) * 9 / 16) !important;
+            border-radius: 12px !important;
+            border: 0 !important;
+        }
+        #heygen-streaming-embed.show {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4">
+            <h1 class="text-2xl font-bold text-gray-800">Interactive Video Experience</h1>
+        </div>
+    </header>
+    
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="text-center w-full">
+            <div class="video-container">
+                <div class="loading-spinner"></div>
+                <!-- Placeholder; Heygen injects its own element -->
+                <iframe id="heygen-iframe"></iframe>
+            </div>
+            
+            <div class="mt-8 max-w-2xl mx-auto">
+                <h2 class="text-xl font-semibold text-gray-700 mb-3">Video Interaktif Anda</h2>
+                <p class="text-gray-600">Widget Heygen akan muncul di tengah layar (centered) berkat CSS override di atas.</p>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm">© 2025 Interactive Video Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Original Heygen embed (kept as-is). Our CSS overrides will center it. -->
+    <script>
+    !function(window){
+      const host="https://labs.heygen.com",
+            url=host+"/guest/streaming-embed?share=eyJxdWFsaXR5IjoiaGlnaCIsImF2YXRhck5hbWUiOiJUaGFkZGV1c19Qcm9mZXNzaW9uYWxMb29r%0D%0AX3B1YmxpYyIsInByZXZpZXdJbWciOiJodHRwczovL2ZpbGVzMi5oZXlnZW4uYWkvYXZhdGFyL3Yz%0D%0ALzhkYzJjYWExNzJjZDRlNjc5NmIzN2U5ZjE2OTU0YjdlXzU1OTUwL3ByZXZpZXdfdGFyZ2V0Lndl%0D%0AYnAiLCJuZWVkUmVtb3ZlQmFja2dyb3VuZCI6dHJ1ZSwia25vd2xlZGdlQmFzZUlkIjoiZGVtby0x%0D%0AIiwidXNlcm5hbWUiOiJlMGQ4NDZlMDQ4NjY0NjJmOWNlMjBmMWFjNDYwODAxZiJ9&inIFrame=1",
+            clientWidth=document.body.clientWidth,
+            wrapDiv=document.createElement("div");
+      wrapDiv.id="heygen-streaming-embed";
+      const container=document.createElement("div");
+      container.id="heygen-streaming-container";
+      const stylesheet=document.createElement("style");
+      /* We keep Heygen's default CSS but our global overrides (with !important) take priority. */
+      stylesheet.innerHTML=`
+        #heygen-streaming-embed {
+          z-index: 9999;
+          position: fixed;
+          left: 40px;
+          bottom: 40px;
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          border: 2px solid #fff;
+          box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.12);
+          transition: all linear 0.1s;
+          overflow: hidden;
+          opacity: 0;
+          visibility: hidden;
+        }
+        #heygen-streaming-embed.show {
+          opacity: 1;
+          visibility: visible;
+        }
+        #heygen-streaming-embed.expand {
+          ${clientWidth<540?"height: 266px; width: 96%; left: 50%; transform: translateX(-50%);":"height: 366px; width: calc(366px * 16 / 9);"}
+          border: 0;
+          border-radius: 8px;
+        }
+        #heygen-streaming-container { width: 100%; height: 100%; }
+        #heygen-streaming-container iframe { width: 100%; height: 100%; border: 0; }
+      `;
+      const iframe=document.createElement("iframe");
+      iframe.allowFullscreen=!1;
+      iframe.title="Streaming Embed";
+      iframe.role="dialog";
+      iframe.allow="microphone";
+      iframe.src=url;
+      let visible=!1, initial=!1;
+      window.addEventListener("message",(e=>{
+        if(e.origin===host && e.data && e.data.type && "streaming-embed"===e.data.type){
+          if("init"===e.data.action){ initial=!0; wrapDiv.classList.toggle("show",initial); }
+          else if("show"===e.data.action){ visible=!0; wrapDiv.classList.toggle("expand",visible); }
+          else if("hide"===e.data.action){ visible=!1; wrapDiv.classList.toggle("expand",visible); }
+        }
+      }));
+      container.appendChild(iframe);
+      wrapDiv.appendChild(stylesheet);
+      wrapDiv.appendChild(container);
+      document.body.appendChild(wrapDiv);
+    }(globalThis);
+    </script>
+</body>
+</html>
