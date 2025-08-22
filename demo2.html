@@ -57,11 +57,7 @@
   <script>
     !function(window){
       const host = "https://labs.heygen.com";
-      const url = host + "/guest/streaming-embed?share=eyJxdWFsaXR5IjoiaGlnaCIsImF2YXRhck5hbWUiOiJXYXluZV8yMDI0MDcxMSIsInByZXZpZXdJ\
-bWciOiJodHRwczovL2ZpbGVzMi5oZXlnZW4uYWkvYXZhdGFyL3YzL2EzZmRiMGM2NTIwMjRmNzk5\
-ODRhYWVjMTFlYmYyNjk0XzM0MzUwL3ByZXZpZXdfdGFyZ2V0LndlYnAiLCJuZWVkUmVtb3ZlQmFj\
-a2dyb3VuZCI6ZmFsc2UsImtub3dsZWRnZUJhc2VJZCI6ImRlbW8tMSIsInVzZXJuYW1lIjoiNThh\
-NDM2MDRjYzZhNDU1MDk2OTUwZDcwZjRhZGExMGYifQ%3D%3D&inIFrame=1";
+      const url = host + "/guest/streaming-embed?share=eyJxdWFsaXR5IjoiaGlnaCIsImF2YXRhck5hbWUiOiJXYXluZV8yMDI0MDcxMSIsInByZXZpZXdJbWciOiJodHRwczovL2ZpbGVzMi5oZXlnZW4uYWkvYXZhdGFyL3YzL2EzZmRiMGM2NTIwMjRmNzk5ODRhYWVjMTFlYmYyNjk0XzM0MzUwL3ByZXZpZXdfdGFyZ2V0LndlYnAiLCJuZWVkUmVtb3ZlQmFja2dyb3VuZCI6ZmFsc2UsImtub3dsZWRnZUJhc2VJZCI6ImRlbW8tMSIsInVzZXJuYW1lIjoiNThhNDM2MDRjYzZhNDU1MDk2OTUwZDcwZjRhZGExMGYifQ%3D%3D&inIFrame=1";
 
       const clientWidth = document.body.clientWidth;
       const wrapDiv = document.createElement("div");
@@ -75,15 +71,15 @@ NDM2MDRjYzZhNDU1MDk2OTUwZDcwZjRhZGExMGYifQ%3D%3D&inIFrame=1";
         #heygen-streaming-embed {
           z-index: 9999;
           position: fixed;
-          top: 50%;
+          top: 20px;
           left: 50%;
-          transform: translate(-50%, -50%);
+          transform: translateX(-50%);
           width: 200px;
           height: 200px;
           border-radius: 50%;
           border: 2px solid #fff;
           box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.12);
-          transition: all linear 0.1s;
+          transition: all linear 0.2s;
           overflow: hidden;
           opacity: 0;
           visibility: hidden;
